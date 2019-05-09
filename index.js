@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const express = require('express')
 const app = express()
 const AWS = require('aws-sdk');
+var fs = require('fs');
 
 const USERS_TABLE = process.env.USERS_TABLE;
 
@@ -71,6 +72,18 @@ app.get('/', function (req, res) {
       }
       res.json({ userId, name });
     });
+  })
+
+  // create add-ingredients endpoint to read and index file into db
+  app.post('/add-ingredients', function(req, res) {
+    fs.readFile('database.json', (err, data) => {  
+        if (err) throw err;
+        let ingredients = JSON.parse(data);
+        // TODO: add the contents of file to db
+        
+        // console.log(ingredients);
+    });
+    res.json({"status": "success"}) // TODO: send an apt response
   })
   
   module.exports.handler = serverless(app);

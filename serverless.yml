@@ -34,6 +34,10 @@ functions:
     handler: index.handler
     events:
       - http: 'POST /users'
+  createIngreditents:
+    handler: index.handler
+    events:
+      - http: 'POST /add-ingredients'
 
 plugins:
   - serverless-dynamodb-local
