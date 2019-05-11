@@ -39,6 +39,10 @@ functions:
     handler: index.handler
     events:
       - http: 'POST /add-ingredients'
+  fuzzySearch:
+    handler: index.handler
+    events:
+      - http: 'GET /fuzzy-search/{proxy+}'
 
 plugins:
   - serverless-dynamodb-local

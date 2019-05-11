@@ -1,5 +1,5 @@
 // Set of utility functions to normalize and understand strings
-const latinMap = require('latinMap.json');
+const latinMap = require('./latinMap.json');
 
 // Function to remove diatrics and normalize the string to latin encoding.
 String.prototype.toLatin = function() {

@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 const AWS = require('aws-sdk');
 var fs = require('fs');
+const utils = require('./StringUtils.js');
 
 const ING_TABLE = process.env.ING_TABLE;
 
@@ -33,7 +34,6 @@ app.get('/', function (req, res) {
         ingKey: req.params.key
       },
     }
-    console.log(params)
     dynamoDb.get(params, (error, result) => {
       if (error) {
         console.log(error);
@@ -47,6 +47,30 @@ app.get('/', function (req, res) {
       }
     });
   })
+
+app.get('/fuzzy-search/:key', function(req, res) {
+  userKey = req.params.key;
+  console.log(userKey)
+
+  const params = {
+    TableName: 'ing-table-dev',
+    Key: {
+      ingKey: userKey.toHashKey()
+    },
+  }
+  dynamoDb.get(params, (error, result) => {
+    if (error) {
+      console.log(error);
+      res.status(400).json({ error: 'Could not get ingredient' });
+    }
+    if (result.Item) {
+      const {key, value} = result.Item;
+      res.json({ key, value });
+    } else {
+      res.status(404).json({ error: "Ingredient not found" });
+    }
+  });
+})
   
 
   // create add-ingredients endpoint to read and index file into db
@@ -55,8 +79,6 @@ app.get('/', function (req, res) {
         if (err) throw err;
         let ingredients = JSON.parse(data);
         // TODO: add the contents of file to db
-        var batchRequest = ""
-        var actualBatchRequest
         var requestArray = []
         Object.entries(ingredients).forEach(
             ([key, value]) => {
@@ -80,14 +102,13 @@ app.get('/', function (req, res) {
                         console.log(error);
                         res.status(400).json({ error: 'Could not create ingredent' });
                       }
-                      res.json({"status": "success"})
                     });
                     requestArray = []
                   }
             },
         );
+        res.status(200).json({"status": "success"})
     });
-    res.status(200).json({"status": "success"}) // TODO: send an apt response
   })
   
   module.exports.handler = serverless(app);
