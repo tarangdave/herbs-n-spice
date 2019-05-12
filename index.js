@@ -49,7 +49,6 @@ app.get('/', function (req, res) {
   })
 
 app.post('/new-ingredient', function(req, res){
-  console.log(req.body)
   const params = {
     TableName: ING_TABLE,
     Item: {
@@ -68,7 +67,6 @@ app.post('/new-ingredient', function(req, res){
 
 app.get('/fuzzy-search/:key', function(req, res) {
   userKey = req.params.key;
-  // console.log(userKey.toHashKey().getVariations())
 
   const params = {
     TableName: 'ing-table-dev',
@@ -100,7 +98,6 @@ app.get('/fuzzy-search/:key', function(req, res) {
         var requestArray = []
         Object.entries(ingredients).forEach(
             ([key, value]) => {
-                console.log(value)
                 requestArray.push(
                   {
                       PutRequest: {

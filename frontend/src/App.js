@@ -24,11 +24,9 @@ class App extends Component {
     axios.get('http://localhost:3000/fuzzy-search/'+ingInput)
       .then(function (response) {
         // handle success
-        console.log(response);
         var tagStr = ""
         for (let [key, value] of Object.entries(response.data.value.tags)) {
           tagStr += ""+key+", "
-          console.log(tagStr);
         }
         self.setState({ingredient: response.data.value.text, tags: tagStr.slice(0,-2)})
       })
@@ -75,14 +73,12 @@ class App extends Component {
     for(var i=0;i<array.length;i++){
       tagObj[array[i].toUpperCase()] = 1
     }
-    console.log(tagObj)
     axios.post('http://localhost:3000/new-ingredient', {
       ingredient: ingObj,
       text: textObj,
       tags: tagObj
     })
     .then(function (response) {
-      console.log(response);
     })
     .catch(function (error) {
       console.log(error);
