@@ -48,9 +48,27 @@ app.get('/', function (req, res) {
     });
   })
 
+app.post('/new-ingredient', function(req, res){
+  console.log(req.body)
+  const params = {
+    TableName: ING_TABLE,
+    Item: {
+      ingKey: req.body.ingredient,
+      value: {"text": req.body.text, "tags": req.body.tags}
+    },
+  };
+  dynamoDb.put(params, (error) => {
+    if (error) {
+      console.log(error);
+      res.status(400).json({ error: 'Could not create user' });
+    }
+    res.json({"success": "status"});
+  });
+})
+
 app.get('/fuzzy-search/:key', function(req, res) {
   userKey = req.params.key;
-  console.log(userKey)
+  // console.log(userKey.toHashKey().getVariations())
 
   const params = {
     TableName: 'ing-table-dev',
@@ -82,6 +100,7 @@ app.get('/fuzzy-search/:key', function(req, res) {
         var requestArray = []
         Object.entries(ingredients).forEach(
             ([key, value]) => {
+                console.log(value)
                 requestArray.push(
                   {
                       PutRequest: {
