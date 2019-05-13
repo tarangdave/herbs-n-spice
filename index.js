@@ -83,7 +83,6 @@ app.get('/fuzzy-search/:key', (req, res) => {
     }
   });
 });
-  
 
 // create add-ingredients endpoint to read and index file into db
 app.put('/add-ingredients', (req, res) => {
@@ -118,8 +117,8 @@ app.put('/add-ingredients', (req, res) => {
           }
         },
     );
-    res.status(200).json({ 'status': 'success' })
+    res.status(200).json({ 'status': 'success' });
   });
 });
-  
-  module.exports.handler = serverless(app);
+
+module.exports.handler = serverless(app);
