@@ -16,6 +16,7 @@
 + ``` sls offline start ```
 + Server will be running at port 3000
 + Dynamodb will be running at port 8000. You can access the console using ``` http://localhost:8000/shell/ ```
++ Populating the db, run ``` curl -H "Content-Type: application/json" -X PUT http://localhost:3000/add-ingredients ```
 
 ### Installation - Client
 
