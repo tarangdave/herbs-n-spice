@@ -20,15 +20,25 @@ class App extends Component {
     this.changeAddTags = this.changeAddTags.bind(this);
   }
 
+  /**
+   * This is a function to make axios call to rest endpoint.
+   *
+   * @param {window} self - A this param
+   * @param {string} ingInput - A search param
+   *
+   * @example
+   *
+   *     updateData(this, 'eggo')
+   */
   updateData(self, ingInput) {
     axios.get(`http://localhost:3000/fuzzy-search/${ingInput}`)
         .then((response) => {
         // handle success
-        var tagStr = ""
+        let tagStr = ''
         for (let [key, value] of Object.entries(response.data.value.tags)) {
-          tagStr += ""+key+", "
+          tagStr += '' + key + ', ' // iterate over the tag object from response and store as comma separated string
         }
-        self.setState({ingredient: response.data.value.text, tags: tagStr.slice(0,-2)});
+        self.setState({ingredient: response.data.value.text, tags: tagStr.slice(0,-2)}); // slice the space and extra comma from end
       })
         .catch((error) => {
         // handle error
@@ -40,6 +50,7 @@ class App extends Component {
     const ingInput = event.target.value;
     this.setState({ ingInput });
 
+    // call update data to fetch ingredients from endpoint
     this.updateData(this, ingInput);
   }
 
@@ -58,13 +69,19 @@ class App extends Component {
     this.setState({ addTags });
   }
 
+
+  /**
+   * This is a function to make axios call on submit click
+   * Adds a new ingredient to the dynamodb database
+   *
+   */
   submitIngData() {
-    let array = this.state.addTags.replace(/ /g, '').split(',');
+    let array = this.state.addTags.replace(/ /g, '').split(','); // remove all whitespace and split based on comma
     let ingObj = this.state.addIngredient;
     let textObj = this.state.addText;
     let tagObj = {};
     for (let i = 0; i < array.length; i++) {
-      tagObj[array[i].toUpperCase()] = 1;
+      tagObj[array[i].toUpperCase()] = 1; // iterate over array and create a tag object, assigning each key the value 1
     }
     axios.post('http://localhost:3000/new-ingredient', {
       ingredient: ingObj,
