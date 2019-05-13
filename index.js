@@ -22,10 +22,16 @@ if (IS_OFFLINE === 'true') {
 
 app.use(bodyParser.json({ strict: false }));
 
-// Get key ingredient endpoint for search
+/**
+ * This is a rest endpoint to fetch data from db using the
+ * key passed in param.
+ *
+ * @param {string} key - user typed key param
+ * @return {json} {key, value}
+ */
 app.get('/ingredient/:key', (req, res) => {
   const params = {
-    TableName: 'ing-table-dev',
+    TableName: ING_TABLE,
     Key: {
       ingKey: req.params.key,
     },
@@ -44,6 +50,12 @@ app.get('/ingredient/:key', (req, res) => {
   });
 });
 
+/**
+ * This is a rest endpoint to add new ingredient data to db.
+ *
+ * @param {json} body - user sent body
+ * @return {json} status messgae
+ */
 app.post('/new-ingredient', (req, res) => {
   const params = {
     TableName: ING_TABLE,
@@ -61,11 +73,19 @@ app.post('/new-ingredient', (req, res) => {
   });
 });
 
+
+/**
+ * This is a rest endpoint to fuzzy search data from db using the
+ * key passed in param.
+ *
+ * @param {string} key - user typed key param
+ * @return {json} {key, value}
+ */
 app.get('/fuzzy-search/:key', (req, res) => {
   const userKey = req.params.key;
 
   const params = {
-    TableName: 'ing-table-dev',
+    TableName: ING_TABLE,
     Key: {
       ingKey: userKey.toHashKey()
     },
@@ -84,7 +104,11 @@ app.get('/fuzzy-search/:key', (req, res) => {
   });
 });
 
-// create add-ingredients endpoint to read and index file into db
+/**
+ * This is a rest endpoint to add all data from database.json into db.
+ *
+ * @return {json} status
+ */
 app.put('/add-ingredients', (req, res) => {
   fs.readFile(__dirname + '/database.json', (err, data) => {
     if (err) throw err;
