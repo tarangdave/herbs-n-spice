@@ -89,17 +89,24 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <div>
-          <input type="text" value={this.state.ingInput} onChange={this.ingSearchInput}></input>
-          <div>Ingredient: <span>{this.state.ingredient}</span></div>
-          <div>Tags: <span>{this.state.tags}</span></div>
+      <div>
+        <div className="navbar">
+          <div className="text-color">Welcome to herbs-n-spice</div>
         </div>
-        <div>
-          Ingredient<input type="text" value={this.state.addIngredient} onChange={this.changeAddIng}></input>
-          Text Description<input type="text" value={this.state.addText} onChange={this.changeAddText}></input>
-          Tags(comma separated)<input type="text" value={this.state.addTags} onChange={this.changeAddTags}></input>
-          <button type="button" onClick={this.submitIngData}>Submit</button>
+        <div className="App">
+          <div>
+            <input type="text" value={this.state.ingInput} onChange={this.ingSearchInput} placeholder="Type ingredient name..."></input>
+            <div className="my-list">
+              <div><b className="text-color">Ingredient:</b> <span>{this.state.ingredient}</span></div>
+              <div><b className="text-color">Tags:</b> <span>{this.state.tags}</span></div>
+            </div>
+          </div>
+          <div>
+            <input type="text" value={this.state.addIngredient} onChange={this.changeAddIng} placeholder="Add Ingredient name..." required></input><br/>
+            <input type="text" value={this.state.addText} onChange={this.changeAddText} placeholder="Add a text description" required></input><br/>
+            <input type="text" value={this.state.addTags} onChange={this.changeAddTags} placeholder="Add tags (comma separated)" required></input><br/>
+            <button type="submit" className="base-color" onClick={this.submitIngData}>Submit</button>
+          </div>
         </div>
       </div>
     );
