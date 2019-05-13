@@ -3,13 +3,13 @@
 + ``` git clone https://github.com/tarangdave/herbs-n-spice.git```
 + ``` cd herbs-n-spice```
 
-### Installation - Server
+### Installation - Server (LINUX environment)
 
 + ``` npm install -g serverless ```
 + ``` npm install ```
 + ``` sls dynamodb install ```
 
-### Running Server
+### Running Server (LINUX environment)
 
 + ``` cd herbs-n-spice ```
 + ``` serverless config credentials --provider aws --key "accesskey" --secret "secretkey" ```
@@ -18,12 +18,12 @@
 + Dynamodb will be running at port 8000. You can access the console using ``` http://localhost:8000/shell/ ```
 + Populating the db, run ``` curl -H "Content-Type: application/json" -X PUT http://localhost:3000/add-ingredients ```
 
-### Installation - Client
+### Installation - Client (LINUX environment)
 
 + ``` cd frontend ```
 + ``` npm install ```
 
-### Running Client
+### Running Client (LINUX environment)
 
 + ``` cd herbs-n-spice ```
 + ``` cd frontend ```
