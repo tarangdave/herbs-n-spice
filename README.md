@@ -36,3 +36,5 @@
 + Index database.json data into dynamodb by running - ``` curl -H "Content-Type: application/json" -X PUT http://localhost:3000/add-ingredients ```
 + Search for a specific key ingredient run - ``` curl -H "Content-Type: application/json" -X GET http://localhost:3000/ingredient/surf ```
 + Add your own ingredient run - ``` curl -H "Content-Type: application/json" -X POST --data '{"ingredient":"test","text":"test text","tags":{"a":1,"b":1}}' http://localhost:3000/new-ingredient ```
+
+> A sample serverless tutorial - [https://serverless.com/blog/serverless-express-rest-api/](https://serverless.com/blog/serverless-express-rest-api/)
